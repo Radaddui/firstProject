@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReportManagement</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .container {
+            margin: 20px;
+        }
+
+        .board {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .board th, .board td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .board th {
+            background-color: #333;
+            color: white;
+        }
+
+        .board tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .board tr:hover {
+            background-color: #ddd;
+        }
+
+        .add-button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <a href="/admin/main"><h1>Admin Board</h1></a>
+</header>
+
+<div class="container">
+    <table class="board">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td><a href="#">Sample Post 1</a></td>
+            <td>Admin</td>
+            <td>2023-10-30</td>
+        </tr>
+        <tr>
+            <td>2 (글 번호)</td>
+            <td><a href="#">Sample Post 2 (제목 여기 + 상세페이지 링크 여기)</a></td>
+            <td>Admin (작성자 여기)</td>
+            <td>2023-10-30 (날짜 여기)</td>
+        </tr>
+        <!-- Add more rows for other posts -->
+        </tbody>
+    </table>
+
+    <div class="add-button">
+        <button>글 작성 버튼</button>
+    </div>
+</div>
+
+</body>
+</html>

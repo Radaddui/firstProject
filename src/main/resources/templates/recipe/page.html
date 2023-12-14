@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml" th:charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+
+    <style>
+        /* 기본 스타일 리셋 */
+        {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 전체 폰트 설정 */
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 제목 스타일링 */
+        h1 {
+            background-color: #ffffff;
+            color: #333;
+            padding: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* 테이블 스타일링 */
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        td {
+            background-color: #ffffff;
+        }
+
+        /* 링크 스타일링 */
+        a {
+            color: #5cb85c;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* 글쓰기 버튼 스타일링 */
+        a[href="/recipe/write"] {
+            background-color: #5cb85c;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        a[href="/recipe/write"]:hover {
+            background-color: #4cae4c;
+        }
+
+        /* 페이지네이션 스타일링 */
+        .pagination {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .pagination a {
+            background-color: #ddd;
+            color: #333;
+            padding: 5px 10px;
+            margin: 0 5px;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .pagination a:hover,
+        .pagination a.active {
+            background-color: #5cb85c;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>게시판 목록 </h1>
+
+<div>
+    <a th:href="@{'/recipe/page/1'}">전체</a>
+    <a th:href="@{'/recipe/category/KoreanFood/1'}">한식</a>
+    <a th:href="@{'/recipe/category/ChineseFood/1'}">중식</a>
+    <a th:href="@{'/recipe/category/JapanFood/1'}">일식</a>
+    <a th:href="@{'/recipe/category/WesternFood/1'}">양식</a>
+</div>
+
+<form accept-charset="UTF-8" th:action="@{/recipe/search}" method="get">
+    <label for="type">검색 유형:</label>
+    <select name="type">
+        <option value="title">제목</option>
+        <option value="userId">작성자 아이디</option>
+    </select>
+    <input type="text" name="keyword" placeholder="검색어를 입력하세요">
+    <button type="submit">검색</button>
+</form>
+
+<table border="1">
+
+    <tr>
+        <th>글 번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성 날짜</th>
+        <th>수정 날짜</th>
+        <th>카테 고리</th>
+        <th>조횟수</th>
+    </tr>
+
+    <tr th:each="recipe : ${recipes}">
+        <td th:text="${recipe.num}"></td>
+        <td>
+            <a th:href="@{'/recipe/readRecipe/' + ${recipe.num}}">
+                <span th:text="${recipe.title}"></span>
+            </a>
+        </td>
+        <td th:text="${recipe.fkUsers.nickName}"></td>
+        <td th:text="${#dates.format(recipe.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${#dates.format(recipe.processedDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:if="${recipe.fkCategories != null}" th:text="${recipe.fkCategories.name}"></td>
+        <td th:text="${recipe.cnt}"></td>
+    </tr>
+
+</table>
+
+
+<div th:if="${recipes != null and recipes instanceof T(org.springframework.data.domain.Page) and recipes.totalPages > 1}" class="pagination">
+    <span th:if="${recipes.hasPrevious()}">
+        <a th:href="@{'/recipe/page/' + ${recipes.number}}">이전</a>
+    </span>
+        <span th:each="pageNum : ${#numbers.sequence(1, recipes.totalPages)}">
+        <a th:href="@{'/recipe/page/' + ${pageNum}}" th:text="${pageNum}" th:class="${recipes.number + 1 == pageNum} ? 'active' : ''"></a>
+    </span>
+        <span th:if="${recipes.hasNext()}">
+        <a th:href="@{'/recipe/page/' + ${recipes.number + 2}}">다음</a>
+    </span>
+</div>
+
+<a href="/recipe/write">글쓰기</a>
+
+<script>
+
+    // 페이지네이션에 대한 간단한 자바스크립트 기능을 추가합니다.
+     document.addEventListener('DOMContentLoaded', function () {
+         // 페이지네이션 내의 현재 페이지에 'active' 클래스를 추가하여 스타일을 변경합니다.
+         const currentPageNumber = window.location.pathname.split('/').pop();
+         const paginationLinks = document.querySelectorAll('.pagination a');
+
+         paginationLinks.forEach(function (link) {
+             if (link.innerText === currentPageNumber) {
+                 link.classList.add('active');
+             }
+         });
+     });
+
+
+</script>
+
+</body>
+</html>

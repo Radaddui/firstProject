@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>신고글 상세보기</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .report-container {
+            background-color: #ffffff;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+        }
+
+        .report-detail {
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        label {
+            font-weight: bold;
+            color: #495057;
+            display: block;
+        }
+
+        span, p {
+            display: block;
+            margin-top: 5px;
+            color: #212529;
+        }
+
+        a {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 20px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+
+        /* 추가적인 스타일링 */
+        .back-link {
+            display: block;
+            width: max-content;
+            padding: 8px 16px;
+            margin-top: 20px;
+            background-color: #6c757d;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .back-link:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+<h1>신고글 상세보기</h1>
+
+<div class="report-container">
+    <div class="report-detail">
+        <label>번호</label>
+        <span th:text="${report.num}"></span>
+    </div>
+    <div class="report-detail">
+        <label>작성자</label>
+        <span th:text="${report.fkUsers.nickName}"></span>
+    </div>
+    <div class="report-detail">
+        <label>유형</label>
+        <span th:text="${report.reportCategory.getDescription()}"></span>
+    </div>
+    <div class="report-detail">
+        <label>작성일</label>
+        <span th:text="${#dates.format(report.createDate, 'yyyy-MM-dd HH:mm')}"></span>
+    </div>
+    <div class="report-detail">
+        <label>내용</label>
+        <p th:text="${report.content}"></p>
+    </div>
+    <a href="/help/report/report" class="back-link">목록으로</a>
+</div>
+
+</body>
+</html>

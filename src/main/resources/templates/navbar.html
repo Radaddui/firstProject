@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>navbar</title>
+    <link rel="stylesheet" th:href="@{/css/navstyle.css}">
+</head>
+<body>
+        <nav th:style="'background-color: lightgreen;'">
+            <ul th:style="'list-style: none; display: flex; justify-content: space-around;'">
+                <li th:style="'margin: 0 10px;'"><a href="/login/login">로그인</a></li>
+                <li th:style="'margin: 0 10px;'"><a href="/recipe/recipe">게시판</a></li>
+                <li th:style="'margin: 0 10px;'"><a href="/notice/notice">공지사항</a></li>
+                <li th:style="'margin: 0 10px;'"><a href="/help/help">고객센터</a></li>
+            </ul>
+        </nav>
+</body>
+</html>

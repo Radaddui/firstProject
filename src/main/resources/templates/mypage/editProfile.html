@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <title>회원정보수정</title>
+</head>
+<body>
+<script src="/js/duplicate.js"></script>
+<script src="/js/reconfirmPassword.js"></script>
+
+    <h2>회원정보 수정</h2>
+    <h2>/mypage/editProfile</h2>
+
+    <form th:action="@{/mypage/updateProfile}" method="post" th:object="${usersDTO}">
+        <div id="editProfile">
+            <div class="form-group">
+                <label for="nickName">닉네임 : </label>
+                <input type="text" id="nickName" name="nickName" onkeyup="inputCheckAfter(this)" placeholder="닉네임" th:value="${users.nickName}" required>
+                <button type="button" onclick="checkDuplicate(this)" style="opacity: 0.4;" disabled>닉네임 중복확인</button>
+                <span class="result-class"><!-- 서버에서 가져온 값이 여기에 표시. --></span>
+            </div>
+
+            <div class="form-group">
+                <label for="birthdate">생년월일 : </label>
+                <input type="date" id="birthdate" name="birthdate" placeholder="생년월일" th:value="${users.birthdate}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email 주소 : </label>
+                <input type="email" id="email" name="email" onkeyup="inputCheckAfter(this)" placeholder="E-mail" th:value="${users.email}" required>
+                <button type="button" onclick="checkDuplicate(this)" style="opacity: 0.4;" disabled>E-Mail 중복확인</button>
+                <span class="result-class"><!-- 서버에서 가져온 값이 여기에 표시. --></span>
+            </div>
+
+            <li><a href="/mypage/resetPassword">비번 변경</a></li>
+
+            <button type="submit" id="submitBtn" onclick="return checkAndPerform()">수정</button>
+
+        </div>
+    </form>
+
+</body>
+</html>

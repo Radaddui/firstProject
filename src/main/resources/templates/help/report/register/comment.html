@@ -1,0 +1,164 @@
+<!-- 댓글 신고 작성 페이지 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>댓글 신고 작성</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+
+            height: 100vh;
+        }
+
+        .container {
+            width: 1000px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        select, input[type=text], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* Adds padding without increasing the width */
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px; /* 또는 원하는 높이 값 */
+            resize: none; /* 크기 조절 비활성화 */
+        }
+
+        button {
+            background-color: #5c6bc0;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #3f51b5;
+        }
+
+        .button-inline {
+            background: none;
+            color: #5c6bc0;
+            padding: 0;
+            border: none;
+        }
+
+        .button-inline:hover {
+            color: #3f51b5;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #5c6bc0;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+<h1>댓글 신고 작성</h1>
+
+<div class="container">
+    <form action="/help/report/register/createReportComment" method="post" th:object="${reportDTO}">
+
+        <label for="reportCategory">신고 유형:</label>
+        <select id="reportCategory" name="reportCategory" th:field="*{reportCategory}" required>
+            <option value="">-- 유형 선택 --</option>
+            <option th:each="category : ${T(org.zerock.myapp.domain.ReportCategory).values()}"
+                    th:value="${category.name()}"
+                    th:text="${category.getDescription()}">유형</option>
+        </select><br/>
+
+        <label for="searchQuery">댓글 검색:</label>
+        <input type="text" id="searchQuery" name="searchQuery" required />
+        <button type="button" class="button-inline" onclick="searchComments()">검색</button><br/>
+
+        <div id="searchResults" style="margin-top: 20px;">
+            <!-- 검색 결과가 여기에 표시됩니다 -->
+        </div>
+
+        <label for="reportContent">내용:</label>
+        <textarea id="reportContent" name="content" th:field="*{content}" required></textarea><br/>
+
+        <button type="submit">신고하기</button>
+        <a href="/help/report/report">목록으로</a>
+
+    </form>
+
+</div>
+
+<script>
+    function searchComments() {
+        var query = document.getElementById('searchQuery').value;
+        // Fetch API를 사용하여 서버에 댓글 검색 요청을 보냅니다.
+        fetch('/help/search/comments?query=' + encodeURIComponent(query))
+            .then(response => response.json()) // JSON 응답 파싱
+            .then(data => {
+                // 검색 결과를 페이지에 표시
+                var resultsContainer = document.getElementById('searchResults');
+                resultsContainer.innerHTML = ''; // 이전 결과 클리어
+                data.forEach(comment => {
+                    var commentElement = document.createElement('div');
+                    commentElement.textContent = comment.title; // 댓글 작성자의 닉네임 표시
+                    commentElement.addEventListener('click', function() {
+                        selectCommentForReport(comment.id); // 댓글 ID를 신고 대상으로 설정
+                    });
+                    resultsContainer.appendChild(commentElement);
+                });
+            })
+            .catch(error => {
+                console.error('Search failed:', error);
+            });
+    }
+
+    function selectCommentForReport(commentId) {
+        // 선택된 댓글 ID를 신고 대상 ID 입력 필드에 설정
+        var targetIdInput = document.getElementById('targetId');
+        targetIdInput.value = commentId;
+    }
+</script>
+
+
+</body>
+
+</html>

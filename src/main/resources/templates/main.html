@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인</title>
+    <style>
+        /* 전체 페이지 스타일링 */
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #4CAF50; /* 숲속 느낌의 초록색 배경 */
+            color: white; /* 텍스트 색상은 흰색으로 설정 */
+            margin: 0;
+            padding: 0;
+            text-align: center; /* 내용을 중앙 정렬 */
+        }
+
+        /* 네비게이션 바 스타일링 */
+        nav {
+            background-color: #367c39; /* 네비게이션 바의 배경색 */
+            position: fixed; /* 화면 상단에 고정 */
+            width: 100%; /* 화면 전체 너비 */
+            z-index: 1000; /* 다른 컨텐츠 위에 나타나도록 설정 */
+            display: flex; /* 내비게이션 바 내부를 Flexbox로 정렬 */
+            justify-content: space-between; /* 좌우 여백을 최대로 설정하여 내부 요소를 양 끝에 배치 */
+            align-items: center; /* 수직 중앙 정렬 */
+            padding: 10px 20px; /* 네비게이션 바 내부 여백 */
+        }
+
+        h2 {
+            background-color: #367c39; /* 머리글에 약간 어두운 초록색 사용 */
+            padding: 20px;
+            margin-bottom: 30px; /* 머리글 아래 여백 */
+            color: white;
+        }
+        hr {
+            max-width: 600px; /* 수평선의 최대 폭 설정 */
+            border: 0;
+            height: 1px;
+            background: #fff; /* 대조를 위한 흰색 수평선 */
+            margin: 0 auto 30px; /* 수평선을 중앙에 배치하고 아래에 여백 */
+        }
+
+        ul {
+            list-style: none; /* 목록 스타일 없앰 */
+            padding: 0;
+            display: flex; /* 링크들을 가로로 배치하기 위해 Flexbox 사용 */
+            justify-content: center; /* 가운데 정렬 */
+        }
+
+        li {
+            margin: 15px; /* 각 목록 항목의 여백 */
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3e8e41; /* 링크 버튼에 사용될 배경색 */
+            color: white;
+            text-decoration: none; /* 밑줄 제거 */
+            border-radius: 5px; /* 둥근 모서리 효과 */
+            transition: background-color 0.3s; /* 배경색 변화에 애니메이션 효과 */
+        }
+
+        a:hover {
+            background-color: #2e6b2e; /* 호버 시 배경색 변경 */
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            border: none; /* 테두리 제거 */
+            border-radius: 5px; /* 둥근 모서리 효과 */
+            background-color: #a9a9a9; /* 로그아웃 버튼에 회색 계열의 배경색 */
+            color: white;
+            cursor: pointer; /* 클릭 가능한 요소임을 나타내는 커서 모양 */
+            transition: background-color 0.3s; /* 배경색 변화에 애니메이션 효과 */
+        }
+
+        .logout-btn:hover {
+            background-color: #808080; /* 호버 시 배경색 어두워짐 */
+        }
+
+        /* 로그아웃 버튼 위치 조정 */
+        .logout-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<nav>
+    <a href="/main"><h2>bobzo</h2></a>
+    <ul>
+        <li><a href="/login/login">로그인</a></li>
+        <li><a href="/recipe/page/1">게시판</a></li>
+        <li><a href="/notice/allboard">공지사항</a></li>
+        <li><a href="/help/help">고객센터</a></li>
+        <li><a href="/users/signup">회원가입</a></li>
+        <li><a href="/mypage">마이페이지</a></li>
+        <li><a href="/admin/main">관리자페이지</a></li>
+    </ul>
+
+    <form action="/logout" method="get" class="logout-btn">
+        <input type="submit" value="로그아웃">
+    </form>
+</nav>
+
+<!-- 나머지 내용은 여기에 추가 -->
+</body>
+</html>

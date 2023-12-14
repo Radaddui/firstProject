@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>문의글 상세보기</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        div {
+            background-color: #fff;
+            max-width: 700px;
+            margin: 10px auto;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        span, p {
+            margin-left: 8px;
+        }
+
+        a {
+            display: block;
+            width: fit-content;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #0077cc;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: #005fa3;
+        }
+    </style>
+</head>
+<body>
+<h1>문의글 상세보기</h1>
+
+<div>
+    <label>번호: </label>
+    <span th:text="${question.num}"></span>
+</div>
+
+<div>
+    <label>제목: </label>
+    <span th:text="${question.title}"></span>
+</div>
+
+<div>
+    <label>작성자: </label>
+    <span th:text="${question.fkUsers.nickName}"></span> <!-- Users 엔터티의 nickName 필드 -->
+</div>
+
+<div>
+    <label>작성일: </label>
+    <span th:text="${#dates.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></span>
+</div>
+
+<div>
+    <label>내용: </label>
+    <p th:text="${question.content}"></p>
+</div>
+
+<a href="/help/question/question">목록으로</a>
+</body>
+</html>

@@ -1,0 +1,135 @@
+plugins {
+	id 'java'
+
+//	------------------------------------
+//	If you want to package runnable `jar` and `war`, Must be required.(***)
+//	------------------------------------
+	id 'war'
+
+	id 'org.springframework.boot' version '3.1.4'
+	id 'io.spring.dependency-management' version '1.1.3'
+
+//	id 'org.springframework.boot' version '2.7.15'
+//	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+} // plugins
+
+
+group = 'org.zerock'
+version = '0.0.1-SNAPSHOT'
+
+
+java {
+	sourceCompatibility = '17'
+	targetCompatibility = '17'
+} // java
+
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	} // compileOnly
+	testCompileOnly {
+		extendsFrom testAnnotationProcessor
+	} // testCompileOnly
+} // configurations
+
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+} // repositories
+
+
+dependencies {
+	// ---------------------------------------------
+	// * Dependencies * can not be declared against the `runtimeClasspath`,	`compileClasspath`,
+	// 	`testCompileClasspath`,	`testRuntimeClasspath`, `apiElements` configuration.
+	// ---------------------------------------------
+
+	// ====================================================================== //
+	// 1. Essentially Fundamental Dependencies for Web
+	// ====================================================================== //
+	// `compileOnly` only used for `main` sources.
+	// Whereas, `implementation` also would be useful for `test` sources.
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// * Note: `spring-boot-starter-test` already includes `JUnit Test Framework`.
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	annotationProcessor 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+
+
+
+	// ====================================================================== //
+	// 2. `querydsl` for dynamic query
+	// ====================================================================== //
+	// groupId:artifactId:version:classifier
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	implementation 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+	implementation 'com.querydsl:querydsl-core'
+
+
+	// ====================================================================== //
+	// 4. JDBC Drivers for H2, Oracle MySQL & Oracle OCI
+	// ====================================================================== //
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// ---------------------------------------------
+	// (* Caution *) Do use this Oracle OCI dependency
+	// with `server.tomcat.additional-tld-skip-patterns = *18*, osdt*` property
+	// declared in `application.properties` file.
+	// ---------------------------------------------
+	runtimeOnly('com.oracle.database.jdbc:ojdbc8-production') {
+		exclude group: 'com.oracle.database.ha', 	module: 'simplefan'
+		exclude group: 'com.oracle.database.ha', 	module: 'ons'
+		exclude group: 'com.oracle.database.jdbc', 	module: 'rsi'
+		exclude group: 'com.oracle.database.xml', 	module: 'xdb'
+		exclude group: 'com.oracle.database.xml', 	module: 'xmlparserv2'
+	}
+
+
+	// ====================================================================== //
+	// 5. JDBC Proxy Driver - Driver Spy
+	// ====================================================================== //
+	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16'
+
+
+	// ====================================================================== //
+	// 6. Spring Security Tag libraries
+	// ====================================================================== //
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
+ 	implementation 'org.springframework.security:spring-security-taglibs'
+
+
+//   ====================================================================== //
+//  	7. Mybatis Dependencies for Spring Boot v3.x //
+//   ====================================================================== //
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
+	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2'
+} // dependencies
+
+
+test {						// 1st. method - OK : == tasks.named('test')
+//tasks.named('test') {		// 2nd. method - OK : == test
+	useJUnitPlatform()		// Execute the `useJUnitPlatform()` method.
+} // When executing gradle task named `test`
+
+
+bootWar {													// 1st. method - OK : == tasks.named('bootWar')
+//tasks.named('bootWar') {									// 2nd. method - OK : == bootWar
+	// Execute the `setDuplicatesStrategy()` or `duplicatesStrategy()` method.
+	duplicatesStrategy(DuplicatesStrategy.EXCLUDE)			// 1st. method - OK : == setDuplicatesStrategy
+	// setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE)	// 2nd. method - OK : == duplicatesStrategy
+} // When executing gradle task `bootWar`
+

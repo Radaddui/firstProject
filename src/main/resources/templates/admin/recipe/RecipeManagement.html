@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipeManagement</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .container {
+            margin: 20px;
+        }
+
+        .board {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .board th, .board td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .board th {
+            background-color: #333;
+            color: white;
+        }
+
+        .board tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .board tr:hover {
+            background-color: #ddd;
+        }
+
+        .add-button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <a href="/admin/main"><h1>Admin Board</h1></a>
+</header>
+
+<div class="container">
+    <table class="board">
+        <thead>
+
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Date</th>
+            <th>Categorie</th>
+            <th>ReadCount</th>
+        </tr>
+        
+        </thead>
+
+        <tbody>
+            <tr th:each="recipe : ${recipe}">
+                <td th:text="${recipe.num}"></td>
+                <td th:text="${recipe.title}"></td>
+                <td th:text="${recipe.fkUsers.nickName}"></td>
+                <td th:text="${#dates.format(recipe.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:if="${recipe.fkCategories != null}" th:text="${recipe.fkCategories.name}"></td>
+                <td th:text="${recipe.cnt}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="add-button">
+        <button>글 작성 버튼</button>
+    </div>
+</div>
+
+</body>
+</html>

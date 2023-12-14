@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>신고글 목록</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            color: #333;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        a {
+            color: #337ab7;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .button-link {
+            padding: 10px 15px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .button-link:hover {
+            background-color: #4cae4c;
+        }
+
+        /* 추가적인 스타일링 */
+        .button-link {
+            display: inline-block;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1>신고글 목록</h1>
+<table>
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>작성자</th>
+        <th>유형</th>
+        <th>작성일</th>
+        <th>진행상태</th>
+        <th class="center">상세보기</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="report : ${reports}">
+        <td th:text="${report.num}"></td>
+        <td th:text="${report.fkUsers.nickName}"></td>
+        <td th:text="${report.reportCategory.getDescription()}"></td>
+        <td th:text="${#dates.format(report.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text="${report.reportStatus}"></td>
+        <td class="center"><a th:href="@{/help/report/detail/{num}(num=${report.num})}">상세보기</a></td>
+    </tr>
+    </tbody>
+</table>
+<a href="/help/report/register/recipe" class="button-link">게시물 신고 작성</a>
+<a href="/help/report/register/comment" class="button-link">댓글 신고 작성</a>
+</body>
+</html>

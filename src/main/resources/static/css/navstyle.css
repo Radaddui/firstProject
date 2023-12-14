@@ -1,0 +1,14 @@
+
+#navs{
+    background-color: lightgreen;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around; /* 요소 간의 간격 조절을 위해 사용합니다. */
+}
+
+nav li {
+    margin: 0 10px; /* 각 항목 간의 간격을 조절합니다. */
+}

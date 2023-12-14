@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notice</title>
+</head>
+<body>
+    <h1>/templates/noticeView.html</h1>
+    <hr>
+    <p>글쓰는 페이지입니다.</p>
+
+    <form action="/notice/writenorice" method="post">
+        <input type="text" name="board">
+        <input type="submit" value="글작성" width="100px" height="100px">
+    </form>
+
+    <form action="/notice/allboard" method="get">
+        <input type="submit" value="취소" width="100px" height="100px">
+    </form>
+
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <title>회원가입</title>
+
+    <style>
+
+                /* 전체 페이지의 기본 스타일을 설정 */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 회원가입 컨테이너의 스타일을 설정 */
+        .signup-container {
+            background-color: white;
+            width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 폼 내부 요소의 스타일을 설정 */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 라벨의 스타일을 설정합니다. */
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        /* 인풋 필드의 스타일을 설정 */
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="date"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* 버튼의 스타일을 설정*/
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #5cb85c;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: default;
+        }
+
+        /* 중복 확인 결과 메시지의 스타일을 설정 */
+        .result-class {
+            margin-top: 5px;
+        }
+
+        /* 회원가입 버튼의 스타일을 설정 */
+        #submitBtn {
+            background-color: #337ab7;
+        }
+
+        /* 비밀번호 일치/불일치 메시지의 스타일을 설정 */
+        #passwordMatchMessage {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+    </style>
+
+</head>
+<body>
+<script src="/js/duplicate.js"></script>
+<script src="/js/reconfirmPassword.js"></script>
+
+<div class="signup-container">
+    <h2>회원가입</h2>
+
+    <form th:action="@{/users/register}" method="post">
+        <div id="signup">
+            <div class="form-group">
+                <label for="id">User ID:</label>
+                <input type="text" id="id" name="userId" onkeydown="inputCheckAfter(this)" placeholder="User ID" required>
+                <button type="button" onclick="checkDuplicate(this)">ID 중복확인</button>
+                <div class="result-class"> <!-- 서버에서 가져온 값이 여기에 표시됨. --> </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+                <label for="pswdCheck">Password 확인:</label>
+                <input type="password" id="pswdCheck" placeholder="Password 재입력" onkeyup="checkPasswordMatch()" required>
+                <span id="passwordMatchMessage"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" onkeydown="inputCheckAfter(this)" placeholder="Email" required>
+                <button type="button" onclick="checkDuplicate(this)">E-Mail 중복확인</button>
+                <div class="result-class"> <!-- 서버에서 가져온 값이 여기에 표시됨. --> </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="birthdate">생년월일:</label>
+                <input type="date" id="birthdate" name="birthdate" placeholder="생년월일" required>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="nickName">Nickname:</label>
+                <input type="text" id="nickName" name="nickName"  onkeydown="inputCheckAfter(this)" placeholder="Nickname" required>
+                <button type="button" onclick="checkDuplicate(this)">Nickname 중복확인</button>
+                <div class="result-class"> <!-- 서버에서 가져온 값이 여기에 표시될 것입니다. --> </div>
+            </div>
+            <br>
+            <button type="submit" id="submitBtn" style="opacity: 0.4;" disabled>회원가입</button>
+        </div>
+    </form>
+
+</div>
+
+</body>
+</html>

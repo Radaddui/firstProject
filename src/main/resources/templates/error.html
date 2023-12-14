@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>/WEB-INF/views/error.html</h3>
+<hr>
+
+<h3>* Error Details *</h3>
+
+<ol>
+    <li>타임스탬프: <span th:text="${timestamp}"></span></li>
+    <li>상태: <span th:text="${status}"></span></li>
+    <li>에러: <span th:text="${error}"></span></li>
+    <li>메시지: <span th:text="${message}"></span></li>
+    <li>경로: <span th:text="${path}"></span></li>
+    <li>트레이스: <span th:text="${trace}"></span></li>
+</ol>
+</body>
+</html>
