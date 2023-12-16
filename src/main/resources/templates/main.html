@@ -25,20 +25,22 @@
             justify-content: space-between; /* 좌우 여백을 최대로 설정하여 내부 요소를 양 끝에 배치 */
             align-items: center; /* 수직 중앙 정렬 */
             padding: 10px 20px; /* 네비게이션 바 내부 여백 */
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
         }
 
         h2 {
             background-color: #367c39; /* 머리글에 약간 어두운 초록색 사용 */
-            padding: 20px;
-            margin-bottom: 30px; /* 머리글 아래 여백 */
+            padding: 10px; /* 수정된 부분: 크기를 20px에서 10px로 줄임 */
+            margin-bottom: 20px; /* 수정된 부분: 여백을 30px에서 20px로 줄임 */
             color: white;
         }
+
         hr {
             max-width: 600px; /* 수평선의 최대 폭 설정 */
             border: 0;
             height: 1px;
             background: #fff; /* 대조를 위한 흰색 수평선 */
-            margin: 0 auto 30px; /* 수평선을 중앙에 배치하고 아래에 여백 */
+            margin: 0 auto 20px; /* 수정된 부분: 여백을 30px에서 20px로 줄임 */
         }
 
         ul {
@@ -49,7 +51,12 @@
         }
 
         li {
-            margin: 15px; /* 각 목록 항목의 여백 */
+            margin: 0 15px; /* 각 목록 항목의 여백 */
+        }
+
+        /* 관리자페이지와 로그아웃 간의 간격 조정 */
+        li:last-child {
+            margin-right: 20px;
         }
 
         a {
@@ -67,6 +74,9 @@
         }
 
         .logout-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
             padding: 10px 20px;
             border: none; /* 테두리 제거 */
             border-radius: 5px; /* 둥근 모서리 효과 */
@@ -79,14 +89,6 @@
         .logout-btn:hover {
             background-color: #808080; /* 호버 시 배경색 어두워짐 */
         }
-
-        /* 로그아웃 버튼 위치 조정 */
-        .logout-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-        }
-
     </style>
 </head>
 <body>
@@ -101,12 +103,11 @@
         <li><a href="/mypage">마이페이지</a></li>
         <li><a href="/admin/main">관리자페이지</a></li>
     </ul>
-
-    <form action="/logout" method="get" class="logout-btn">
-        <input type="submit" value="로그아웃">
-    </form>
 </nav>
 
+<form action="/logout" method="get" class="logout-btn">
+    <input type="submit" value="로그아웃">
+</form>
 <!-- 나머지 내용은 여기에 추가 -->
 </body>
 </html>
